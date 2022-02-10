@@ -1,0 +1,15 @@
+const config = {
+  verbose: true,
+};
+
+module.exports = config;
+
+// Or async function
+module.exports = async () => {
+  return {
+    verbose: true,
+    transform: {
+      "\\.m?js$": "rollup-jest"
+    }
+  };
+};
