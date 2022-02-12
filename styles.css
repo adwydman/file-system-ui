@@ -17,6 +17,10 @@
   border-right: 1px solid grey;
 }
 
+.left-panel .node {
+  margin-left: 1rem;
+}
+
 .right-panel {
   flex: 4;
 }
