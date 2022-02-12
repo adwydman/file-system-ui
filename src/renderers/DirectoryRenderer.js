@@ -25,7 +25,27 @@ function createHtmlElement({
   return newHtmlElement;
 }
 
+function chevronOnClick(dependencies) {
+  const { childContainer } = dependencies
+
+  return function(event) {
+    event.stopPropagation();
+    const displayStatus = childContainer.style.display;
+
+    if (displayStatus === 'none') {
+      this.classList.remove('fa-caret-right');
+      this.classList.add('fa-caret-down')
+      childContainer.style.display = 'block';
+    } else {
+      this.classList.add('fa-caret-right')
+      this.classList.remove('fa-caret-down');
+      childContainer.style.display = 'none';
+    }
+  }
+}
+
 function createTreeElement(parentEl, node) {
+  const childContainer = createHtmlElement({ tagName: TAGS.DIV, cssClasses: ['children'] })
   const textContainer = createHtmlElement({ tagName: TAGS.DIV, cssClasses: ['text-container']}) 
   const text = createHtmlElement({ tagName: TAGS.DIV, cssClasses: ['tree-text'], text: node.name })
 
@@ -39,19 +59,20 @@ function createTreeElement(parentEl, node) {
       tagName: TAGS.I,
       cssClasses: ['fa-solid', 'fa-caret-down', 'chevron']
     });
+    chevron.addEventListener('click', chevronOnClick({ childContainer }));
+
     textContainer.appendChild(chevron);
   }
   textContainer.appendChild(folderIcon);
   textContainer.appendChild(text);
 
-  const childContaner = createHtmlElement({ tagName: TAGS.DIV, cssClasses: ['children'] })
 
   const htmlNode = createHtmlElement({
     tagName: TAGS.DIV,
     cssClasses: ['node'],
     children: [
       textContainer,
-      childContaner
+      childContainer
     ]
   })
 
@@ -75,12 +96,12 @@ function createListElement(parentEl, node) {
   })
 
   const documentName = createHtmlElement({ 
-    tagName: 'div', 
+    tagName: TAGS.DIV, 
     text: node.name,
   })
 
   const documentNameWrapper = createHtmlElement({ 
-    tagName: 'div', 
+    tagName: TAGS.DIV, 
     cssClasses: [ 
       'node',
       'cell',
@@ -94,7 +115,7 @@ function createListElement(parentEl, node) {
   })
 
   const dateModified = createHtmlElement({ 
-    tagName: 'div', 
+    tagName: TAGS.DIV, 
     text: node.dateModified,
     cssClasses: [
       'cell',
@@ -103,7 +124,7 @@ function createListElement(parentEl, node) {
   })
 
   const size = createHtmlElement({ 
-    tagName: 'div',  
+    tagName: TAGS.DIV,  
     text: node.isFile ? node.size : null,
     cssClasses: [
       'cell',
