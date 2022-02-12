@@ -46,6 +46,49 @@ function createTreeElement(parentEl, node) {
   return htmlNode;
 }
 
+function createListElement(parentEl, node) {
+  const documentName = createHtmlElement({ 
+    tagName: 'div', 
+    text: node.name, 
+    cssClasses: [ 
+      'node',
+      'cell',
+      'cell-3'
+    ] 
+  })
+
+  const dateModified = createHtmlElement({ 
+    tagName: 'div', 
+    text: node.dateModified,
+    cssClasses: [
+      'cell',
+      'cell-1'
+    ]
+  })
+
+  const size = createHtmlElement({ 
+    tagName: 'div',  
+    text: node.isFile ? node.size : null,
+    cssClasses: [
+      'cell',
+      'cell-1',
+      'cell-numeric'
+    ]
+  })
+
+  const row = createHtmlElement({ 
+    tagName: TAGS.DIV, 
+    cssClasses: [ 'row' ], 
+    children: [
+      documentName,
+      dateModified,
+      size
+    ]
+  })
+
+  parentEl.appendChild(row);
+}
+
 
 export const renderTree = (treeNode, htmlElement) => {
   if (!treeNode.isFolder) {
@@ -57,5 +100,12 @@ export const renderTree = (treeNode, htmlElement) => {
   for (let i = 0; i < treeNode.children.length; i++) {
     const child = treeNode.children[i];
     renderTree(child, newElement)
+  }
+}
+
+export const renderList = (treeNode, htmlElement) => {
+  for (let i = 0; i < treeNode.children.length; i++) {
+    const child = treeNode.children[i];
+    createListElement(htmlElement, child)
   }
 }

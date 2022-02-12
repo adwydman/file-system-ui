@@ -44,7 +44,7 @@ export default class Tree {
     const root = new TreeNode(
       this.treeRaw.type,
       this.treeRaw.name,
-      this.treeRaw.modified,
+      this.treeRaw.dateModified,
       this.treeRaw.size
     );
 
