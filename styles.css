@@ -25,6 +25,10 @@
   flex: 4;
 }
 
+.node:hover {
+  cursor: pointer;
+}
+
 .row {
   display: flex;
 }

@@ -104,6 +104,10 @@ export const renderTree = (treeNode, htmlElement) => {
 }
 
 export const renderList = (treeNode, htmlElement) => {
+  while (htmlElement.firstChild) {
+    htmlElement.removeChild(htmlElement.lastChild);
+  }
+
   for (let i = 0; i < treeNode.children.length; i++) {
     const child = treeNode.children[i];
     createListElement(htmlElement, child)

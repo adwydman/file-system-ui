@@ -18,6 +18,12 @@ function getNodePathToRoot(initialNode) {
 export const leftPanelEventHandler = (callback) => (event) => {
   const nodePath = getNodePathToRoot(event.target);
 
-  callback(nodePath)
+  callback(nodePath);
 };
+
+export const rightPanelEventHandler = (callback) => (event) => {
+  const targetName = event.target.textContent;
+
+  callback(targetName);
+}
 
