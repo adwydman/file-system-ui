@@ -1,5 +1,6 @@
 const TAGS = {
-  DIV: 'div'
+  DIV: 'div',
+  I: 'i'
 }
 
 function createHtmlElement({
@@ -25,14 +26,31 @@ function createHtmlElement({
 }
 
 function createTreeElement(parentEl, node) {
+  const textContainer = createHtmlElement({ tagName: TAGS.DIV, cssClasses: ['text-container']}) 
   const text = createHtmlElement({ tagName: TAGS.DIV, cssClasses: ['tree-text'], text: node.name })
+
+  const folderIcon = createHtmlElement({ 
+    tagName: TAGS.I,
+    cssClasses: ['fa-solid', 'fa-folder-open']
+  });
+
+  if (node.hasFolders) {
+    const chevron = createHtmlElement({
+      tagName: TAGS.I,
+      cssClasses: ['fa-solid', 'fa-caret-down', 'chevron']
+    });
+    textContainer.appendChild(chevron);
+  }
+  textContainer.appendChild(folderIcon);
+  textContainer.appendChild(text);
+
   const childContaner = createHtmlElement({ tagName: TAGS.DIV, cssClasses: ['children'] })
 
   const htmlNode = createHtmlElement({
     tagName: TAGS.DIV,
     cssClasses: ['node'],
     children: [
-      text,
+      textContainer,
       childContaner
     ]
   })
@@ -47,14 +65,32 @@ function createTreeElement(parentEl, node) {
 }
 
 function createListElement(parentEl, node) {
+  const documentIcon = createHtmlElement({
+    tagName: TAGS.I,
+    cssClasses: [
+      'fa-solid',
+      'document-icon',
+      node.isFile ? 'fa-file-lines' : 'fa-folder-open'
+    ]
+  })
+
   const documentName = createHtmlElement({ 
     tagName: 'div', 
-    text: node.name, 
+    text: node.name,
+  })
+
+  const documentNameWrapper = createHtmlElement({ 
+    tagName: 'div', 
     cssClasses: [ 
       'node',
       'cell',
-      'cell-3'
-    ] 
+      'cell-3',
+      'document-wrapper'
+    ],
+    children: [
+      documentIcon,
+      documentName
+    ]
   })
 
   const dateModified = createHtmlElement({ 
@@ -80,7 +116,7 @@ function createListElement(parentEl, node) {
     tagName: TAGS.DIV, 
     cssClasses: [ 'row' ], 
     children: [
-      documentName,
+      documentNameWrapper,
       dateModified,
       size
     ]

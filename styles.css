@@ -25,6 +25,26 @@
   flex: 4;
 }
 
+.right-panel .body .document-wrapper {
+  position: relative;
+}
+
+.right-panel .body .document-icon {
+  position: absolute;
+  left: -2rem;
+}
+
+.text-container {
+  display: flex;
+  position: relative;
+  padding: 0.125rem 0.25rem;
+}
+
+.chevron {
+  position: absolute;
+  left: -.75rem;
+}
+
 .node:hover {
   cursor: pointer;
 }

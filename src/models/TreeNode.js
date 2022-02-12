@@ -29,7 +29,7 @@ export default class TreeNode {
     return this.type === ALLOWED_TYPES.FOLDER;
   }
 
-  get hasChildFolders() {
+  get hasFolders() {
     if (!this.isFolder) {
       // raise error
     }
