@@ -12,6 +12,10 @@ export const createStore = (options = []) => {
 
   return {
     add: (key, value) => {
+      if (!(key in store)) {
+        throw Error('value not set up')
+      }
+
       store[key].value = value;
       if (store[key].onChange) {
         store[key].onChange(value);

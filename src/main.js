@@ -55,18 +55,29 @@ window.addEventListener('load', () => {
     const currentPath = store.get('currentPath');
     const currentNode = store.get('currentNode');
 
-    const pathCandidate = [
-      ...currentPath,
-      targetName
-    ];
+    if (targetName === '..') {
+      const newPath = [...currentPath];
+      newPath.pop()
 
-    const desiredNode = tree.findNode([targetName], currentNode);
+      const newNode = currentNode.parent;
+      store.add('currentPath', newPath);
+      store.add('currentNode', newNode)
 
-    if (desiredNode.isFolder) {
-      store.add('currentPath', pathCandidate);
-      store.add('currentNode', desiredNode)
-
-      renderList(desiredNode, rightPanel)
+      renderList(newNode, rightPanel)
+    } else {
+      const pathCandidate = [
+        ...currentPath,
+        targetName
+      ];
+  
+      const desiredNode = tree.findNode([targetName], currentNode);
+  
+      if (desiredNode.isFolder) {
+        store.add('currentPath', pathCandidate);
+        store.add('currentNode', desiredNode)
+  
+        renderList(desiredNode, rightPanel)
+      }
     }
   };
 

@@ -9,12 +9,13 @@ function createTreeNodes(nodeInfo, parent) {
   for(let i = 0; i < nodeInfo.children.length; i++) {
     const childInfo = nodeInfo.children[i];
 
-    const childNode = new TreeNode(
-      childInfo.type,
-      childInfo.name,
-      childInfo.modified,
-      childInfo.size
-    );
+    const childNode = new TreeNode({
+      type: childInfo.type,
+      name: childInfo.name,
+      modified: childInfo.modified,
+      size: childInfo.size,
+      parent: parent
+    });
 
     parent.addChild(childNode);
 
@@ -41,13 +42,13 @@ export default class Tree {
       return;
     }
 
-    const root = new TreeNode(
-      this.treeRaw.type,
-      this.treeRaw.name,
-      this.treeRaw.dateModified,
-      this.treeRaw.size,
-      true
-    );
+    const root = new TreeNode({
+      type: this.treeRaw.type,
+      name: this.treeRaw.name,
+      dateModified: this.treeRaw.dateModified,
+      size: this.treeRaw.size,
+      parent: null
+    });
 
     this.root = root;
     createTreeNodes(this.treeRaw, root)

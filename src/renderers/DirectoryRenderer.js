@@ -174,6 +174,29 @@ export const renderList = (treeNode, htmlElement) => {
 
   const listFragment = document.createDocumentFragment();
 
+  if (!treeNode.isRoot) {
+    const documentName = createHtmlElement({ 
+      tagName: TAGS.DIV, 
+      text: '..',
+      cssClasses: [
+        'node',
+        'cell',
+        'cell-3',
+        'document-wrapper'
+      ]
+    })
+  
+    const row = createHtmlElement({ 
+      tagName: TAGS.DIV, 
+      cssClasses: [ 'row' ], 
+      children: [
+        documentName
+      ]
+    })
+
+    listFragment.appendChild(row)
+  }
+
   for (let i = 0; i < treeNode.children.length; i++) {
     const child = treeNode.children[i];
     createListElement(listFragment, child)
