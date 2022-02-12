@@ -182,7 +182,7 @@ export const renderList = (treeNode, htmlElement) => {
   htmlElement.appendChild(listFragment);
 }
 
-export const getNodePathToRoot = (initialNode) => {
+export const getNodePathToRoot = (initialNode, top) => {
   const nodePath = [];
   let currentNode = initialNode;
 
@@ -194,7 +194,11 @@ export const getNodePathToRoot = (initialNode) => {
     nodePath.unshift(currentNodeName);
 
     currentNode = htmlNode.parentElement;
-  } while (currentNode.getAttribute('class') !== 'left-panel')
+  } while (currentNode.getAttribute('class') !== top.getAttribute('class'))
 
   return nodePath;
+}
+
+export const setupRenderCurrentPath = (currentPathElement) => (path) => {
+  currentPathElement.textContent = `/${path.join('/')}`;
 }

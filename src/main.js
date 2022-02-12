@@ -1,22 +1,28 @@
 import Tree from './models/Tree';
 import { createStore } from './stores/Store';
-import { renderTree, renderList, getNodePathToRoot } from './renderers/DirectoryRenderer';
+import { renderTree, renderList, getNodePathToRoot, setupRenderCurrentPath } from './renderers/DirectoryRenderer';
 
 const init = () => {
+  const tree = new Tree();
+  const leftPanel = document.querySelector('.left-panel');
+  const rightPanel = document.querySelector('.right-panel .body');
+  const currentPathElement = document.querySelector('.current-path');
+
+  const renderCurrentPath = setupRenderCurrentPath(currentPathElement);
+
   const store = createStore([
     {
       key: 'currentPath',
-      value: []
+      value: [],
+      onChange: (newValue) => {
+        renderCurrentPath(newValue)
+      }
     },
     {
       key: 'currentNode',
       value: null
     }
   ]);
-
-  const tree = new Tree();
-  const leftPanel = document.querySelector('.left-panel');
-  const rightPanel = document.querySelector('.right-panel .body');
 
   return {
     store,
@@ -35,7 +41,7 @@ window.addEventListener('load', () => {
   } = init();
 
   const onLeftPanelClick = (event) => {
-    const nodePath = getNodePathToRoot(event.target);
+    const nodePath = getNodePathToRoot(event.target, leftPanel);
     const desiredNode = tree.findNode(nodePath.slice(1));
 
     store.add('currentPath', nodePath)
@@ -67,7 +73,9 @@ window.addEventListener('load', () => {
   tree.fetchTreeData()
     .then(() => tree.constructTreeNodes())
     .then(() => {
-      store.add('currentPath', [tree.root.name])
+      const path = [tree.root.name];
+
+      store.add('currentPath', path)
       store.add('currentNode', tree.root)
 
       renderTree(tree.root, leftPanel);
