@@ -76,7 +76,7 @@ function createTreeElement(parentEl, node) {
     ]
   })
 
-  if (parentEl.getAttribute('class') === 'left-panel') {
+  if (node.isRoot) {
     parentEl.appendChild(htmlNode);
   } else {
     parentEl.querySelector('.children').appendChild(htmlNode)
@@ -146,8 +146,7 @@ function createListElement(parentEl, node) {
   parentEl.appendChild(row);
 }
 
-
-export const renderTree = (treeNode, htmlElement) => {
+const renderTreeRecursive = (treeNode, htmlElement) => {
   if (!treeNode.isFolder) {
     return;
   }
@@ -156,8 +155,16 @@ export const renderTree = (treeNode, htmlElement) => {
   
   for (let i = 0; i < treeNode.children.length; i++) {
     const child = treeNode.children[i];
-    renderTree(child, newElement)
+    renderTreeRecursive(child, newElement)
   }
+}
+
+export const renderTree = (treeNode, htmlElement) => {
+  const treeFragment = document.createDocumentFragment();
+
+  renderTreeRecursive(treeNode, treeFragment);
+
+  htmlElement.appendChild(treeFragment);
 }
 
 export const renderList = (treeNode, htmlElement) => {
@@ -165,10 +172,14 @@ export const renderList = (treeNode, htmlElement) => {
     htmlElement.removeChild(htmlElement.lastChild);
   }
 
+  const listFragment = document.createDocumentFragment();
+
   for (let i = 0; i < treeNode.children.length; i++) {
     const child = treeNode.children[i];
-    createListElement(htmlElement, child)
+    createListElement(listFragment, child)
   }
+
+  htmlElement.appendChild(listFragment);
 }
 
 export const getNodePathToRoot = (initialNode) => {

@@ -45,7 +45,8 @@ export default class Tree {
       this.treeRaw.type,
       this.treeRaw.name,
       this.treeRaw.dateModified,
-      this.treeRaw.size
+      this.treeRaw.size,
+      true
     );
 
     this.root = root;

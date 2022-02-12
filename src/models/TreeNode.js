@@ -4,7 +4,7 @@ const ALLOWED_TYPES = {
 }
 
 export default class TreeNode {
-  constructor(type, name, dateModified, size) {
+  constructor(type, name, dateModified, size, isRoot = false) {
     if (![ALLOWED_TYPES.FILE, ALLOWED_TYPES.FOLDER].includes(type)) {
       throw new Error(`Incorrect type: ${type}`)
     }
@@ -13,6 +13,7 @@ export default class TreeNode {
     this.name = name;
     this.dateModified = dateModified;
     this.size = size;
+    this.isRoot = isRoot;
 
     if (this.isFile) {
       this.children = null;
