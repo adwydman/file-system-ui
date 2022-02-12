@@ -1,7 +1,6 @@
 import Tree from './models/Tree';
 import { createStore } from './stores/Store';
-import { renderTree, renderList } from './renderers/DirectoryRenderer';
-import { leftPanelEventHandler, rightPanelEventHandler } from './eventHandlers/TreeEventHandler';
+import { renderTree, renderList, getNodePathToRoot } from './renderers/DirectoryRenderer';
 
 const init = () => {
   const store = createStore([
@@ -35,6 +34,36 @@ window.addEventListener('load', () => {
     rightPanel
   } = init();
 
+  const onLeftPanelClick = (event) => {
+    const nodePath = getNodePathToRoot(event.target);
+    const desiredNode = tree.findNode(nodePath.slice(1));
+
+    store.add('currentPath', nodePath)
+    store.add('currentNode', desiredNode);
+
+    renderList(desiredNode, rightPanel)
+  }
+
+  const onRightPanelClick = (event) => {
+    const targetName = event.target.textContent;
+    const currentPath = store.get('currentPath');
+    const currentNode = store.get('currentNode');
+
+    const pathCandidate = [
+      ...currentPath,
+      targetName
+    ];
+
+    const desiredNode = tree.findNode([targetName], currentNode);
+
+    if (desiredNode.isFolder) {
+      store.add('currentPath', pathCandidate);
+      store.add('currentNode', desiredNode)
+
+      renderList(desiredNode, rightPanel)
+    }
+  };
+
   tree.fetchTreeData()
     .then(() => tree.constructTreeNodes())
     .then(() => {
@@ -45,35 +74,7 @@ window.addEventListener('load', () => {
       renderList(tree.root, rightPanel);
     })
     .then(() => {
-      leftPanel.addEventListener('click', leftPanelEventHandler((result) => {
-        // add current node to the store
-        const nodePath = result;
-        const desiredNode = tree.findNode(nodePath.slice(1));
-
-        store.add('currentPath', nodePath)
-        store.add('currentNode', desiredNode);
-
-        renderList(desiredNode, rightPanel)
-      }));
-
-      rightPanel.addEventListener('click', rightPanelEventHandler((result) => {
-        const targetName = result;
-        const currentPath = store.get('currentPath');
-        const currentNode = store.get('currentNode');
-
-        const pathCandidate = [
-          ...currentPath,
-          targetName
-        ];
-
-        const desiredNode = tree.findNode([targetName], currentNode);
-
-        if (desiredNode.isFolder) {
-          store.add('currentPath', pathCandidate);
-          store.add('currentNode', desiredNode)
-  
-          renderList(desiredNode, rightPanel)
-        }
-      }))
-    })
+      leftPanel.addEventListener('click', onLeftPanelClick);
+      rightPanel.addEventListener('click', onRightPanelClick);
+    });
 });

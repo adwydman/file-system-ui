@@ -25,7 +25,7 @@ function createHtmlElement({
   return newHtmlElement;
 }
 
-function chevronOnClick(dependencies) {
+function onChevronClick(dependencies) {
   const { childContainer } = dependencies
 
   return function(event) {
@@ -59,7 +59,7 @@ function createTreeElement(parentEl, node) {
       tagName: TAGS.I,
       cssClasses: ['fa-solid', 'fa-caret-down', 'chevron']
     });
-    chevron.addEventListener('click', chevronOnClick({ childContainer }));
+    chevron.addEventListener('click', onChevronClick({ childContainer }));
 
     textContainer.appendChild(chevron);
   }
@@ -169,4 +169,21 @@ export const renderList = (treeNode, htmlElement) => {
     const child = treeNode.children[i];
     createListElement(htmlElement, child)
   }
+}
+
+export const getNodePathToRoot = (initialNode) => {
+  const nodePath = [];
+  let currentNode = initialNode;
+
+  do {
+    const htmlNode = currentNode.closest('.node');
+    const nodeNameSelector = htmlNode.querySelector('.tree-text');
+    const currentNodeName = nodeNameSelector.textContent;
+
+    nodePath.unshift(currentNodeName);
+
+    currentNode = htmlNode.parentElement;
+  } while (currentNode.getAttribute('class') !== 'left-panel')
+
+  return nodePath;
 }
