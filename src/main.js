@@ -1,5 +1,6 @@
 import Tree from './models/Tree';
 import { renderTree, renderList } from './renderers/DirectoryRenderer';
+import { leftPanelEventHandler } from './eventHandlers/TreeEventHandler';
 
 window.addEventListener('load', () => {
   const tree = new Tree();
@@ -10,8 +11,20 @@ window.addEventListener('load', () => {
   tree.fetchTreeData()
     .then(() => tree.constructTreeNodes())
     .then(() => {
-      console.log('tree', tree.treeRaw)
       renderTree(tree.root, leftPanel);
       renderList(tree.root, rightPanel);
+    })
+    .then(() => {
+      leftPanel.addEventListener('click', leftPanelEventHandler((result) => {
+        const nodePath = result;
+
+        const desiredNode = tree.findNode(nodePath.slice(1));
+
+        while (rightPanel.firstChild) {
+          rightPanel.removeChild(rightPanel.lastChild);
+        }
+
+        renderList(desiredNode, rightPanel)
+      }));
     })
 });

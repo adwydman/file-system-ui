@@ -25,7 +25,7 @@ function createHtmlElement({
 }
 
 function createTreeElement(parentEl, node) {
-  const text = createHtmlElement({ tagName: TAGS.DIV, text: node.name })
+  const text = createHtmlElement({ tagName: TAGS.DIV, cssClasses: ['tree-text'], text: node.name })
   const childContaner = createHtmlElement({ tagName: TAGS.DIV, cssClasses: ['children'] })
 
   const htmlNode = createHtmlElement({
