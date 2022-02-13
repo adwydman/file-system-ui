@@ -18,10 +18,10 @@ const formatBytes = (bytes, decimals = 2) => {
 }
 
 export default class TreeNode {
-  constructor({ type, name, dateModified, size, parent }) {
-    if (![ALLOWED_TYPES.FILE, ALLOWED_TYPES.FOLDER].includes(type)) {
-      throw new Error(`Incorrect type: ${type}`)
-    }
+  constructor(options) {
+    this.beforeCreate(options);
+
+    const { type, name, dateModified, size, parent } = options;
 
     this.type = type;
     this.name = name;
@@ -33,6 +33,12 @@ export default class TreeNode {
       this.children = null;
     } else if (this.isFolder) {
       this.children = [];
+    }
+  }
+
+  beforeCreate(options) {
+    if (![ALLOWED_TYPES.FILE, ALLOWED_TYPES.FOLDER].includes(options.type)) {
+      throw new Error(`Incorrect options.type: ${type}`)
     }
   }
 

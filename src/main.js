@@ -1,6 +1,6 @@
 import Tree from './models/Tree';
 import { createStore } from './stores/Store';
-import { renderTree, renderList, setupRenderCurrentPath } from './renderers/DirectoryRenderer';
+import { renderTree, renderList, setupRenderCurrentPath } from './renderers/index';
 
 const init = () => {
   const tree = new Tree();
@@ -41,7 +41,7 @@ window.addEventListener('load', () => {
   } = init();
 
   const isGoUpClicked = (treeNode) => treeNode === null;
-  
+
   const isDirectoryClicked = (treeNode) => treeNode !== undefined;
 
   const applyDirectoryChanges = (newCurrentPath, newCurrentNode) => {
