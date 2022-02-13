@@ -3,6 +3,20 @@ const ALLOWED_TYPES = {
   FOLDER: 'folder'
 }
 
+const formatBytes = (bytes, decimals = 2) => {
+  if (bytes === 0) {
+    return '0 Bytes';
+  }
+
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+}
+
 export default class TreeNode {
   constructor({ type, name, dateModified, size, parent }) {
     if (![ALLOWED_TYPES.FILE, ALLOWED_TYPES.FOLDER].includes(type)) {
@@ -11,8 +25,8 @@ export default class TreeNode {
 
     this.type = type;
     this.name = name;
-    this.dateModified = dateModified;
-    this.size = size;
+    this.modified = new Date(dateModified);
+    this.size = formatBytes(size);
     this.parent = parent;
 
     if (this.isFile) {
@@ -20,6 +34,21 @@ export default class TreeNode {
     } else if (this.isFolder) {
       this.children = [];
     }
+  }
+
+  set modified(date) {
+    this._modified = new Date(date)
+  }
+
+  get modified() {
+    if (!this._modified) {
+      return null;
+    }
+    const month = this._modified.getMonth() + 1;
+    const day = this._modified.getDate();
+    const year = this._modified.getFullYear();
+
+    return `${month}/${day}/${year}`;
   }
 
   get isRoot() {

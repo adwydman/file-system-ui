@@ -1,20 +1,20 @@
 const tree = {
   type: 'folder',
   name: 'Files',
-  dateModified: '7/6/2020',
+  dateModified: '2022-02-13T06:00:13.000Z',
   size: null,
   children: [
     {
       type: 'folder',
       name: 'Documents',
-      dateModified: '7/6/2020',
+      dateModified: '2022-02-13T06:00:13.000Z',
       size: null,
       children: [
         {
           type: 'file',
           name: 'text.txt',
-          dateModified: '7/6/2020',
-          size: 1,
+          dateModified: '2022-02-13T06:00:13.000Z',
+          size: 11565,
           children: null
         }
       ]
@@ -22,20 +22,20 @@ const tree = {
     {
       type: 'folder',
       name: 'Images',
-      dateModified: '7/6/2020',
+      dateModified: '2022-02-13T06:00:13.000Z',
       size: null,
       children: [
         {
           type: 'folder',
           name: 'Files',
-          dateModified: '7/6/2020',
+          dateModified: '2022-02-13T06:00:13.000Z',
           size: null,
           children: [
             {
               type: 'file',
               name: 'text.txt',
-              dateModified: '7/6/2020',
-              size: 1,
+              dateModified: '2022-02-13T06:00:13.000Z',
+              size: 15363,
               children: null
             }
           ]
@@ -45,22 +45,22 @@ const tree = {
     {
       type: 'folder',
       name: 'System',
-      dateModified: '7/6/2020',
+      dateModified: '2022-02-13T06:00:13.000Z',
       size: null,
       children: []
     },
     {
       type: 'file',
       name: 'Description.rtf',
-      dateModified: '7/6/2020',
-      size: 1,
+      dateModified: '2022-02-13T06:00:13.000Z',
+      size: 76623,
       children: null
     },
     {
       type: 'file',
       name: 'Description.txt',
-      dateModified: '7/6/2020',
-      size: 2,
+      dateModified: '2022-02-13T06:00:13.000Z',
+      size: 83442,
       children: null
     }
   ]

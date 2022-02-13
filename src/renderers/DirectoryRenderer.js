@@ -127,7 +127,7 @@ function createListElement(parentEl, node) {
 
   const dateModified = createHtmlElement({ 
     tagName: TAGS.DIV, 
-    text: node.dateModified,
+    text: node.modified,
     cssClasses: [
       'cell',
       'cell-1'
