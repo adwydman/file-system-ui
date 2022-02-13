@@ -205,7 +205,7 @@ export const renderList = (treeNode, htmlElement) => {
   htmlElement.appendChild(listFragment);
 }
 
-export const getNodePathToRoot = (initialNode, top) => {
+export const getNodePath = (initialNode, top) => {
   const nodePath = [];
   let currentNode = initialNode;
 

@@ -1,6 +1,6 @@
 import Tree from './models/Tree';
 import { createStore } from './stores/Store';
-import { renderTree, renderList, getNodePathToRoot, setupRenderCurrentPath } from './renderers/DirectoryRenderer';
+import { renderTree, renderList, getNodePath, setupRenderCurrentPath } from './renderers/DirectoryRenderer';
 
 const init = () => {
   const tree = new Tree();
@@ -14,7 +14,7 @@ const init = () => {
     {
       key: 'currentPath',
       value: [],
-      onChange: (newValue) => {
+      onChange: (oldValue, newValue) => {
         renderCurrentPath(newValue)
       }
     },
@@ -40,14 +40,18 @@ window.addEventListener('load', () => {
     rightPanel
   } = init();
 
+  const applyDirectoryChanges = (newCurrentPath, newCurrentNode) => {
+    store.add('currentPath', newCurrentPath)
+    store.add('currentNode', newCurrentNode);
+
+    renderList(newCurrentNode, rightPanel)
+  }
+
   const onLeftPanelClick = (event) => {
-    const nodePath = getNodePathToRoot(event.target, leftPanel);
+    const nodePath = getNodePath(event.target, leftPanel);
     const desiredNode = tree.findNode(nodePath.slice(1));
 
-    store.add('currentPath', nodePath)
-    store.add('currentNode', desiredNode);
-
-    renderList(desiredNode, rightPanel)
+    applyDirectoryChanges(nodePath, desiredNode);
   }
 
   const onRightPanelClick = (event) => {
@@ -57,13 +61,11 @@ window.addEventListener('load', () => {
 
     if (targetName === '..') {
       const newPath = [...currentPath];
-      newPath.pop()
+      newPath.pop();
 
       const newNode = currentNode.parent;
-      store.add('currentPath', newPath);
-      store.add('currentNode', newNode)
 
-      renderList(newNode, rightPanel)
+      applyDirectoryChanges(newPath, newNode);
     } else {
       const pathCandidate = [
         ...currentPath,
@@ -72,12 +74,11 @@ window.addEventListener('load', () => {
   
       const desiredNode = tree.findNode([targetName], currentNode);
   
-      if (desiredNode.isFolder) {
-        store.add('currentPath', pathCandidate);
-        store.add('currentNode', desiredNode)
-  
-        renderList(desiredNode, rightPanel)
+      if (!desiredNode.isFolder) {
+        return;
       }
+
+      applyDirectoryChanges(pathCandidate, desiredNode);
     }
   };
 
@@ -95,5 +96,8 @@ window.addEventListener('load', () => {
     .then(() => {
       leftPanel.addEventListener('click', onLeftPanelClick);
       rightPanel.addEventListener('click', onRightPanelClick);
+    })
+    .catch((err) => {
+      console.error('an error occurred', err);
     });
 });

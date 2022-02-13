@@ -12,7 +12,7 @@ function createTreeNodes(nodeInfo, parent) {
     const childNode = new TreeNode({
       type: childInfo.type,
       name: childInfo.name,
-      modified: childInfo.modified,
+      dateModified: childInfo.dateModified,
       size: childInfo.size,
       parent: parent
     });
@@ -61,20 +61,10 @@ export default class Tree {
       return node;
     }
   
-    const currentValue = path[0]
-    const newPath = [
-      ...path.slice(1)
-    ];
-  
-    let desiredNode = null;
-    for (let i = 0; i < node.children.length; i++) {
-      const child = node.children[i];
-  
-      if (child.name === currentValue) {
-        desiredNode = child;
-        break;
-      }
-    }
+    const currentValue = path[0];
+    const newPath = [ ...path.slice(1) ];
+
+    const desiredNode = node.findChildByName(currentValue);
   
     if (!desiredNode) {
       throw Error('not found')

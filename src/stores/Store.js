@@ -11,14 +11,16 @@ export const createStore = (options = []) => {
   }
 
   return {
-    add: (key, value) => {
+    add: (key, newValue) => {
       if (!(key in store)) {
         throw Error('value not set up')
       }
 
-      store[key].value = value;
+      const oldValue = store[key].value;
+
+      store[key].value = newValue;
       if (store[key].onChange) {
-        store[key].onChange(value);
+        store[key].onChange(oldValue, newValue);
       }
       return true;
     },

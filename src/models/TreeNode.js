@@ -4,7 +4,7 @@ const ALLOWED_TYPES = {
 }
 
 export default class TreeNode {
-  constructor({type, name, dateModified, size, parent}) {
+  constructor({ type, name, dateModified, size, parent }) {
     if (![ALLOWED_TYPES.FILE, ALLOWED_TYPES.FOLDER].includes(type)) {
       throw new Error(`Incorrect type: ${type}`)
     }
@@ -36,11 +36,11 @@ export default class TreeNode {
 
   get hasFolders() {
     if (!this.isFolder) {
-      // raise error
+      throw Error('the node is not a folder')
     }
 
     return this.children.some((child) => child.isFolder)
-  }
+  } 
 
   addChild(child) {
     if (child instanceof TreeNode === false) {
@@ -50,5 +50,21 @@ export default class TreeNode {
     }
 
     this.children.push(child);
+  }
+
+  findChildByName(childName) {
+    if (!this.isFolder) {
+      throw Error('the node is not a folder')
+    }
+
+    let child = null;
+    for (let i = 0; i < this.children.length; i++) {
+      if (this.children[i].name === childName) {
+        child = this.children[i];
+        break;
+      }
+    }
+
+    return child;
   }
 }
