@@ -40,6 +40,8 @@ window.addEventListener('load', () => {
     rightPanel
   } = init();
 
+  const isGoUpClicked = (treeNode) => treeNode === null;
+
   const applyDirectoryChanges = (newCurrentPath, newCurrentNode) => {
     store.add('currentPath', newCurrentPath)
     store.add('currentNode', newCurrentNode);
@@ -48,19 +50,19 @@ window.addEventListener('load', () => {
   }
 
   const onLeftPanelClick = (event) => {
-    const closestHtmlNode = event.target.closest('.node');
-    const desiredNode = closestHtmlNode.__node__;
-    const nodePath = desiredNode.getPathFromRoot();
+    const targetTreeNode = event.target.__getTreeNode__();
+    const nodePath = targetTreeNode.getPathFromRoot();
 
-    applyDirectoryChanges(nodePath, desiredNode);
+    applyDirectoryChanges(nodePath, targetTreeNode);
   }
 
   const onRightPanelClick = (event) => {
-    const closestHtmlNode = event.target.closest('.node');
+    const targetTreeNode = event.target.__getTreeNode__();
+
     const currentPath = store.get('currentPath');
     const currentNode = store.get('currentNode');
 
-    if (closestHtmlNode.__node__ === null) {
+    if (isGoUpClicked(targetTreeNode)) {
       const newPath = [...currentPath];
       newPath.pop();
 
@@ -68,18 +70,16 @@ window.addEventListener('load', () => {
 
       applyDirectoryChanges(newPath, newNode);
     } else {
-      const pathCandidate = [
-        ...currentPath,
-        closestHtmlNode.textContent
-      ];
-  
-      const desiredNode = closestHtmlNode.__node__;
-  
-      if (!desiredNode.isFolder) {
+      if (!targetTreeNode.isFolder) {
         return;
       }
 
-      applyDirectoryChanges(pathCandidate, desiredNode);
+      const newPath = [
+        ...currentPath,
+        targetTreeNode.name
+      ];
+
+      applyDirectoryChanges(newPath, targetTreeNode);
     }
   };
 

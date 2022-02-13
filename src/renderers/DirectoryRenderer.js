@@ -22,8 +22,12 @@ function createHtmlElement({
       newHtmlElement.appendChild(child);
     })
   }
-
   newHtmlElement.__node__ = node;
+
+  newHtmlElement.__getTreeNode__ = function() {
+    const closestHtmlNode = this.closest('.node');
+    return closestHtmlNode.__node__
+  };
 
   return newHtmlElement;
 }

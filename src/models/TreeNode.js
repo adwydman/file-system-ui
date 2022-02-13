@@ -36,7 +36,7 @@ export default class TreeNode {
 
   get hasFolders() {
     if (!this.isFolder) {
-      throw Error('the node is not a folder')
+      throw Error('The node is not a folder')
     }
 
     return this.children.some((child) => child.isFolder)
@@ -66,7 +66,7 @@ export default class TreeNode {
 
   findChildByName(childName) {
     if (!this.isFolder) {
-      throw Error('the node is not a folder')
+      throw Error('The node is not a folder')
     }
 
     let child = null;
