@@ -26,7 +26,9 @@ function createHtmlElement({
 
   newHtmlElement.__getTreeNode__ = function() {
     const closestHtmlNode = this.closest('.node');
-    return closestHtmlNode.__node__
+    if (closestHtmlNode) {
+      return closestHtmlNode.__node__;
+    }
   };
 
   return newHtmlElement;
@@ -178,7 +180,9 @@ export const renderTree = (treeNode, htmlElement) => {
 
 export const renderList = (treeNode, htmlElement) => {
   while (htmlElement.firstChild) {
-    htmlElement.removeChild(htmlElement.lastChild);
+    let lastChild = htmlElement.lastChild;
+    htmlElement.removeChild(lastChild);
+    lastChild = null;
   }
 
   const listFragment = document.createDocumentFragment();

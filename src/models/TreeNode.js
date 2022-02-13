@@ -63,20 +63,4 @@ export default class TreeNode {
 
     this.children.push(child);
   }
-
-  findChildByName(childName) {
-    if (!this.isFolder) {
-      throw Error('The node is not a folder')
-    }
-
-    let child = null;
-    for (let i = 0; i < this.children.length; i++) {
-      if (this.children[i].name === childName) {
-        child = this.children[i];
-        break;
-      }
-    }
-
-    return child;
-  }
 }

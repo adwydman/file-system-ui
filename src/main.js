@@ -41,6 +41,8 @@ window.addEventListener('load', () => {
   } = init();
 
   const isGoUpClicked = (treeNode) => treeNode === null;
+  
+  const isDirectoryClicked = (treeNode) => treeNode !== undefined;
 
   const applyDirectoryChanges = (newCurrentPath, newCurrentNode) => {
     store.add('currentPath', newCurrentPath)
@@ -69,7 +71,7 @@ window.addEventListener('load', () => {
       const newNode = currentNode.parent;
 
       applyDirectoryChanges(newPath, newNode);
-    } else {
+    } else if (isDirectoryClicked(targetTreeNode)) {
       if (!targetTreeNode.isFolder) {
         return;
       }
