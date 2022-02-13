@@ -55,25 +55,4 @@ export default class Tree {
 
     return this.root;
   }
-
-  findNode(path, node = this.root) {
-    if (path.length === 0) {
-      return node;
-    }
-  
-    const currentValue = path[0];
-    const newPath = [ ...path.slice(1) ];
-
-    const desiredNode = node.findChildByName(currentValue);
-  
-    if (!desiredNode) {
-      throw Error('not found')
-    }
-  
-    if (desiredNode && newPath.length === 0) {
-      return desiredNode;
-    }
-  
-    return this.findNode(newPath, desiredNode)
-  }
 }

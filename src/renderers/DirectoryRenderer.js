@@ -22,7 +22,7 @@ function createHtmlElement({
       newHtmlElement.appendChild(child);
     })
   }
-  
+
   newHtmlElement.__node__ = node;
 
   return newHtmlElement;
@@ -209,23 +209,6 @@ export const renderList = (treeNode, htmlElement) => {
   }
 
   htmlElement.appendChild(listFragment);
-}
-
-export const getNodePath = (initialNode, top) => {
-  const nodePath = [];
-  let currentNode = initialNode;
-
-  do {
-    const htmlNode = currentNode.closest('.node');
-    const nodeNameSelector = htmlNode.querySelector('.tree-text');
-    const currentNodeName = nodeNameSelector.textContent;
-
-    nodePath.unshift(currentNodeName);
-
-    currentNode = htmlNode.parentElement;
-  } while (currentNode.getAttribute('class') !== top.getAttribute('class'))
-
-  return nodePath;
 }
 
 export const setupRenderCurrentPath = (currentPathElement) => (path) => {
