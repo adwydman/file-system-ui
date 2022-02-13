@@ -89,12 +89,16 @@ const createGoUpEntry = (parentEl) => {
   parentEl.appendChild(row)
 }
 
-export const renderList = (treeNode, htmlElement) => {
+const clearList = (htmlElement) => {
   while (htmlElement.firstChild) {
     let lastChild = htmlElement.lastChild;
     htmlElement.removeChild(lastChild);
     lastChild = null;
   }
+}
+
+export const renderList = (treeNode, htmlElement) => {
+  clearList(htmlElement);
 
   const listFragment = document.createDocumentFragment();
 
