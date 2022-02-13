@@ -24,7 +24,7 @@ const onChevronClick = (dependencies) => {
 
 const createTreeElement = (parentEl, node) => {
   const childContainer = createHtmlElement({ tagName: TAGS.DIV, cssClasses: ['children'] })
-  const textContainer = createHtmlElement({ tagName: TAGS.DIV, cssClasses: ['text-container']}) 
+  const textContainer = createHtmlElement({ tagName: TAGS.DIV, cssClasses: ['text-container', 'clickable']}) 
   const text = createHtmlElement({ tagName: TAGS.DIV, cssClasses: ['tree-text'], text: node.name })
 
   const folderIcon = createHtmlElement({ 

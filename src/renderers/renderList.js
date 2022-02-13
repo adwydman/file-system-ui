@@ -24,7 +24,8 @@ const createListElement = (parentEl, node) => {
       'node',
       'cell',
       'cell-3',
-      'document-wrapper'
+      'document-wrapper',
+      'clickable'
     ],
     children: [
       documentIcon,
@@ -73,7 +74,8 @@ const createGoUpEntry = (parentEl) => {
       'node',
       'cell',
       'cell-3',
-      'document-wrapper'
+      'document-wrapper',
+      'clickable'
     ],
     node: null
   })
