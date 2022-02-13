@@ -1,6 +1,6 @@
 import Tree from './models/Tree';
 import { createStore } from './stores/Store';
-import { renderTree, renderList, getNodePath, setupRenderCurrentPath } from './renderers/DirectoryRenderer';
+import { renderTree, renderList, setupRenderCurrentPath } from './renderers/DirectoryRenderer';
 
 const init = () => {
   const tree = new Tree();
@@ -48,18 +48,19 @@ window.addEventListener('load', () => {
   }
 
   const onLeftPanelClick = (event) => {
-    const nodePath = getNodePath(event.target, leftPanel);
-    const desiredNode = tree.findNode(nodePath.slice(1));
+    const closestHtmlNode = event.target.closest('.node');
+    const desiredNode = closestHtmlNode.__node__;
+    const nodePath = desiredNode.getPathFromRoot();
 
     applyDirectoryChanges(nodePath, desiredNode);
   }
 
   const onRightPanelClick = (event) => {
-    const targetName = event.target.textContent;
+    const closestHtmlNode = event.target.closest('.node');
     const currentPath = store.get('currentPath');
     const currentNode = store.get('currentNode');
 
-    if (targetName === '..') {
+    if (closestHtmlNode.__node__ === null) {
       const newPath = [...currentPath];
       newPath.pop();
 
@@ -69,10 +70,10 @@ window.addEventListener('load', () => {
     } else {
       const pathCandidate = [
         ...currentPath,
-        targetName
+        closestHtmlNode.textContent
       ];
   
-      const desiredNode = tree.findNode([targetName], currentNode);
+      const desiredNode = closestHtmlNode.__node__;
   
       if (!desiredNode.isFolder) {
         return;

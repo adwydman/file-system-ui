@@ -40,7 +40,19 @@ export default class TreeNode {
     }
 
     return this.children.some((child) => child.isFolder)
-  } 
+  }
+
+  getPathFromRoot() {
+    const path = [];
+
+    let currentNode = this;
+    do {
+      path.unshift(currentNode.name);
+      currentNode = currentNode.parent;
+    } while (currentNode !== null)
+
+    return path;
+  }
 
   addChild(child) {
     if (child instanceof TreeNode === false) {

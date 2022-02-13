@@ -7,7 +7,8 @@ function createHtmlElement({
   tagName,
   cssClasses,
   text,
-  children
+  children,
+  node
 }) {
   const newHtmlElement = document.createElement(tagName);
   if (cssClasses) {
@@ -21,6 +22,8 @@ function createHtmlElement({
       newHtmlElement.appendChild(child);
     })
   }
+  
+  newHtmlElement.__node__ = node;
 
   return newHtmlElement;
 }
@@ -73,7 +76,8 @@ function createTreeElement(parentEl, node) {
     children: [
       textContainer,
       childContainer
-    ]
+    ],
+    node: node
   })
 
   if (node.isRoot) {
@@ -111,7 +115,8 @@ function createListElement(parentEl, node) {
     children: [
       documentIcon,
       documentName
-    ]
+    ],
+    node: node
   })
 
   const dateModified = createHtmlElement({ 
@@ -183,7 +188,8 @@ export const renderList = (treeNode, htmlElement) => {
         'cell',
         'cell-3',
         'document-wrapper'
-      ]
+      ],
+      node: null
     })
   
     const row = createHtmlElement({ 
