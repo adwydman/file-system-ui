@@ -11,6 +11,14 @@ $ npm start
 
 Then click `index.html` to open the project
 
+## Tests
+
+In order to run tests run:
+
+```
+$ npm test
+```
+
 ## Implementation
 
 ### `main.js`
