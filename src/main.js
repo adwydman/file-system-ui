@@ -59,6 +59,9 @@ window.addEventListener('load', () => {
   }
 
   const onRightPanelClick = (event) => {
+    if (!('__getTreeNode__' in event.target)) {
+      return;
+    }
     const targetTreeNode = event.target.__getTreeNode__();
 
     const currentPath = store.get('currentPath');
