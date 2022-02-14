@@ -37,3 +37,11 @@ export const createHtmlElement = ({
 export const setupRenderCurrentPath = (currentPathElement) => (path) => {
   currentPathElement.textContent = `/${path.join('/')}`;
 }
+
+export const clearChildrenElements = (htmlElement) => {
+  while (htmlElement.firstChild) {
+    let lastChild = htmlElement.lastChild;
+    htmlElement.removeChild(lastChild);
+    lastChild = null;
+  }
+}

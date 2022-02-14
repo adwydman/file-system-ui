@@ -20,7 +20,12 @@ const init = () => {
     },
     {
       key: 'currentNode',
-      value: null
+      value: null,
+      onChange: (oldValue, newValue) => {
+        if (tree.root) {
+          renderTree(tree.root, leftPanel, newValue);
+        }
+      }
     }
   ]);
 
@@ -96,7 +101,7 @@ window.addEventListener('load', () => {
       store.update('currentPath', path)
       store.update('currentNode', tree.root)
 
-      renderTree(tree.root, leftPanel);
+      renderTree(tree.root, leftPanel, tree.root);
       renderList(tree.root, rightPanel);
     })
     .then(() => {

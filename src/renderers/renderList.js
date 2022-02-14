@@ -1,6 +1,7 @@
 import { 
   TAGS,
-  createHtmlElement
+  createHtmlElement,
+  clearChildrenElements
 } from './utils';
 
 const createListElement = (parentEl, node) => {
@@ -88,16 +89,8 @@ const createGoUpEntry = (parentEl) => {
   parentEl.appendChild(row)
 }
 
-const clearList = (htmlElement) => {
-  while (htmlElement.firstChild) {
-    let lastChild = htmlElement.lastChild;
-    htmlElement.removeChild(lastChild);
-    lastChild = null;
-  }
-}
-
 export const renderList = (treeNode, htmlElement) => {
-  clearList(htmlElement);
+  clearChildrenElements(htmlElement);
 
   const listFragment = document.createDocumentFragment();
 

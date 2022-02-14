@@ -1,6 +1,7 @@
 import { 
   TAGS,
-  createHtmlElement
+  createHtmlElement,
+  clearChildrenElements
 } from './utils';
 
 const onChevronClick = (dependencies) => {
@@ -28,9 +29,18 @@ const onChevronClick = (dependencies) => {
   }
 }
 
-const createTreeElement = (parentEl, node) => {
+const createTreeElement = (parentEl, node, currentNode) => {
   const childContainer = createHtmlElement({ tagName: TAGS.DIV, cssClasses: ['children'] })
-  const textContainer = createHtmlElement({ tagName: TAGS.DIV, cssClasses: ['text-container', 'clickable'] }) 
+  const textContainerClasses = [
+    'text-container', 
+    'clickable'
+  ]
+
+  if (node === currentNode) {
+    textContainerClasses.push('active-node');
+  }
+
+  const textContainer = createHtmlElement({ tagName: TAGS.DIV, cssClasses: textContainerClasses }) 
   const text = createHtmlElement({ tagName: TAGS.DIV, cssClasses: ['tree-text'], text: node.name })
 
   const folderIcon = createHtmlElement({ 
@@ -70,23 +80,25 @@ const createTreeElement = (parentEl, node) => {
   return htmlNode;
 }
 
-const renderTreeRecursive = (treeNode, htmlElement) => {
+const renderTreeRecursive = (treeNode, htmlElement, currentNode) => {
   if (!treeNode.isFolder) {
     return;
   }
   
-  const newElement = createTreeElement(htmlElement, treeNode);
+  const newElement = createTreeElement(htmlElement, treeNode, currentNode);
   
   for (let i = 0; i < treeNode.children.length; i++) {
     const child = treeNode.children[i];
-    renderTreeRecursive(child, newElement)
+    renderTreeRecursive(child, newElement, currentNode)
   }
 }
 
-export const renderTree = (treeNode, htmlElement) => {
+export const renderTree = (treeNode, htmlElement, currentNode) => {
+  clearChildrenElements(htmlElement);
+
   const treeFragment = document.createDocumentFragment();
 
-  renderTreeRecursive(treeNode, treeFragment);
+  renderTreeRecursive(treeNode, treeFragment, currentNode);
 
   htmlElement.appendChild(treeFragment);
 }
