@@ -12,9 +12,8 @@ function createTreeNodes(nodeInfo, parent) {
     const childNode = new TreeNode({
       type: childInfo.type,
       name: childInfo.name,
-      dateModified: childInfo.dateModified,
-      size: childInfo.size,
-      parent: parent
+      modified: childInfo.modified,
+      size: childInfo.size
     });
 
     parent.addChild(childNode);
@@ -45,7 +44,7 @@ export default class Tree {
     const root = new TreeNode({
       type: this.treeRaw.type,
       name: this.treeRaw.name,
-      dateModified: this.treeRaw.dateModified,
+      modified: this.treeRaw.modified,
       size: this.treeRaw.size,
       parent: null
     });

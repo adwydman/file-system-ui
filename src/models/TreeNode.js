@@ -21,11 +21,11 @@ export default class TreeNode {
   constructor(options) {
     this.beforeCreate(options);
 
-    const { type, name, dateModified, size, parent } = options;
+    const { type, name, modified, size, parent } = options;
 
     this.type = type;
     this.name = name;
-    this.modified = new Date(dateModified);
+    this.modified = new Date(modified);
     this.size = formatBytes(size);
     this.parent = parent;
 
@@ -38,7 +38,7 @@ export default class TreeNode {
 
   beforeCreate(options) {
     if (![ALLOWED_TYPES.FILE, ALLOWED_TYPES.FOLDER].includes(options.type)) {
-      throw new Error(`Incorrect options.type: ${type}`)
+      throw new Error(`Incorrect type: ${options.type}`)
     }
   }
 
@@ -96,6 +96,7 @@ export default class TreeNode {
       throw Error('Cannot add child to a file');
     }
 
+    child.parent = this;
     this.children.push(child);
   }
 }
