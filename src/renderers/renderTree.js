@@ -4,7 +4,7 @@ import {
 } from './utils';
 
 const onChevronClick = (dependencies) => {
-  const { childContainer } = dependencies
+  const { childContainer, folderIcon } = dependencies
 
   return function(event) {
     event.stopPropagation();
@@ -12,11 +12,17 @@ const onChevronClick = (dependencies) => {
 
     if (displayStatus === 'none') {
       this.classList.remove('fa-caret-right');
-      this.classList.add('fa-caret-down')
+      this.classList.add('fa-caret-down');
+      folderIcon.classList.add('fa-folder-open');
+      folderIcon.classList.remove('fa-folder');
+
       childContainer.style.display = 'block';
     } else {
-      this.classList.add('fa-caret-right')
+      this.classList.add('fa-caret-right');
       this.classList.remove('fa-caret-down');
+      folderIcon.classList.add('fa-folder');
+      folderIcon.classList.remove('fa-folder-open');
+
       childContainer.style.display = 'none';
     }
   }
@@ -24,7 +30,7 @@ const onChevronClick = (dependencies) => {
 
 const createTreeElement = (parentEl, node) => {
   const childContainer = createHtmlElement({ tagName: TAGS.DIV, cssClasses: ['children'] })
-  const textContainer = createHtmlElement({ tagName: TAGS.DIV, cssClasses: ['text-container', 'clickable']}) 
+  const textContainer = createHtmlElement({ tagName: TAGS.DIV, cssClasses: ['text-container', 'clickable'] }) 
   const text = createHtmlElement({ tagName: TAGS.DIV, cssClasses: ['tree-text'], text: node.name })
 
   const folderIcon = createHtmlElement({ 
@@ -37,7 +43,7 @@ const createTreeElement = (parentEl, node) => {
       tagName: TAGS.I,
       cssClasses: ['fa-solid', 'fa-caret-down', 'chevron']
     });
-    chevron.addEventListener('click', onChevronClick({ childContainer }));
+    chevron.addEventListener('click', onChevronClick({ childContainer, folderIcon }));
 
     textContainer.appendChild(chevron);
   }

@@ -14,10 +14,19 @@
   background-color: var(--secondary-color);
 }
 
+.active {
+  background-color: var(--secondary-color);
+}
+
+.panel-padding {
+  padding: 0.25rem 0.5rem;
+}
+
 .main {
   display: flex;
   justify-content: center;
   width: 50%;
+  height: 30rem;
   margin: 0 auto;
   border: 1px solid var(--primary-color);
 }
@@ -44,10 +53,26 @@
   left: -2rem;
 }
 
+.right-panel .row {
+  display: flex;
+}
+
+.right-panel .body .row {
+  padding-bottom: 0.125rem;
+}
+
+.right-panel .body .row:last-child {
+  padding-bottom: 0;
+}
+
 .text-container {
   display: flex;
   position: relative;
   padding: 0.125rem 0.25rem;
+}
+
+.text-container:target {
+  background-color: var(--secondary-color);
 }
 
 .chevron {
@@ -59,12 +84,10 @@
   cursor: pointer;
 }
 
-.row {
-  display: flex;
-}
-
 .header {
+  border-top: 1px solid var(--primary-color);
   border-bottom: 1px solid var(--primary-color);
+  color: var(--primary-color);
 }
 
 .row .cell-3 {

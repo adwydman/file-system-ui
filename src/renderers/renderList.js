@@ -21,17 +21,14 @@ const createListElement = (parentEl, node) => {
   const documentNameWrapper = createHtmlElement({ 
     tagName: TAGS.DIV, 
     cssClasses: [ 
-      'node',
       'cell',
       'cell-3',
-      'document-wrapper',
-      'clickable'
+      'document-wrapper'
     ],
     children: [
       documentIcon,
       documentName
-    ],
-    node: node
+    ]
   })
 
   const dateModified = createHtmlElement({ 
@@ -55,12 +52,13 @@ const createListElement = (parentEl, node) => {
 
   const row = createHtmlElement({ 
     tagName: TAGS.DIV, 
-    cssClasses: [ 'row' ], 
+    cssClasses: [ 'row', 'clickable', 'node' ], 
     children: [
       documentNameWrapper,
       dateModified,
       size
-    ]
+    ],
+    node: node
   })
 
   parentEl.appendChild(row);
@@ -74,15 +72,14 @@ const createGoUpEntry = (parentEl) => {
       'node',
       'cell',
       'cell-3',
-      'document-wrapper',
-      'clickable'
+      'document-wrapper'
     ],
     node: null
   })
 
   const row = createHtmlElement({ 
     tagName: TAGS.DIV, 
-    cssClasses: [ 'row' ], 
+    cssClasses: [ 'row', 'clickable' ], 
     children: [
       documentName
     ]
