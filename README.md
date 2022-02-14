@@ -70,6 +70,8 @@ Holds common pieces used by both `renderTree` and `renderList`.
 
 - `createHtmlElement()`
 - `TAGS` - an object that stores available tags
+- `clearChildrenElements()` - removes all child elements from an HTML element
+- `setupRenderCurrentPath()` - function that returns another function that handles displaying the current path
 
 ##### `createHtmlElement()`
 Creates a new HTML element that can be attached to the DOM. Accepts the following options in its argument:
