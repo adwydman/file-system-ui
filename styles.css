@@ -103,3 +103,22 @@
 .row .cell-numeric {
   text-align: right;
 }
+
+@media only screen and (max-width: 1400px) {
+  .main {
+    width: 75%;
+  }
+}
+
+
+@media only screen and (max-width: 1000px) {
+  .main {
+    flex-flow: column;
+  }
+
+  .left-panel {
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--primary-color); 
+  }
+}
