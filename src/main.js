@@ -45,8 +45,8 @@ window.addEventListener('load', () => {
   const isDirectoryClicked = (treeNode) => treeNode !== undefined;
 
   const applyDirectoryChanges = (newCurrentPath, newCurrentNode) => {
-    store.add('currentPath', newCurrentPath)
-    store.add('currentNode', newCurrentNode);
+    store.update('currentPath', newCurrentPath)
+    store.update('currentNode', newCurrentNode);
 
     renderList(newCurrentNode, rightPanel)
   }
@@ -90,8 +90,8 @@ window.addEventListener('load', () => {
     .then(() => {
       const path = [tree.root.name];
 
-      store.add('currentPath', path)
-      store.add('currentNode', tree.root)
+      store.update('currentPath', path)
+      store.update('currentNode', tree.root)
 
       renderTree(tree.root, leftPanel);
       renderList(tree.root, rightPanel);

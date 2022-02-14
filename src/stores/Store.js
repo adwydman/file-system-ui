@@ -11,9 +11,9 @@ export const createStore = (options = []) => {
   }
 
   return {
-    add: (key, newValue) => {
+    update: (key, newValue) => {
       if (!(key in store)) {
-        throw Error('value not set up')
+        throw Error('Value not set up')
       }
 
       const oldValue = store[key].value;
